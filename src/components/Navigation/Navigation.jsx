@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { 
   AppBar,
   Box,
@@ -11,41 +11,20 @@ import {
   Button,
   Tooltip,
   MenuItem,
+  Stack,
 } from '@mui/material';
+import {
+  signOut, 
+} from 'firebase/auth'
 import {
   Adb as AdbIcon,
   Menu as MenuIcon,
 } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
-
-const pages = [
-  {
-    name: 'Item 1',
-    url: '/item1',
-  },
-  {
-    name: 'Item 2',
-    url: '/item2',
-  },
-];
-
-const settings = [
-  {
-    name: 'Settings',
-    url: '/settings',
-  },
-  {
-    name: 'My Account',
-    url: '/my-account',
-  },
-  {
-    name: 'Logout',
-    url: '/auth',
-  },
-];
-
+import { Link, useNavigate } from 'react-router-dom';
+import { getAuth } from "firebase/auth";
 
 const Navigation = () => {
+  const [hasUser, setHasUser] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -64,124 +43,134 @@ const Navigation = () => {
     setAnchorElUser(null);
   };
 
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  useEffect(() => {
+    // Listen for changes to the current user
+    if (user) {
+        console.log('may user!')
+        console.log(user);
+        setHasUser(true);
+    } else {
+      // No user is signed in.
+        console.log('walang user!')
+        setHasUser(false);
+    } // Cleanup listener
+  }, [user]);
+
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    try {
+        await signOut(auth);
+        navigate('/');
+    } catch (err) {
+        console.error("Error logging out:", err.message);
+    }
+  };
+
+
   return (
-    <AppBar position="static">
+    <AppBar 
+      position="static" 
+      sx={{
+        backgroundColor: '#FBEEFF',
+        boxShadow: 'none'
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
+          <Stack 
+            direction='row' 
+            justifyContent='space-between'
+            alignItems='center'
+            sx={{ width: '100%' }}
           >
-            LOGO
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                flexGrow: 1,
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'primary',
+                textDecoration: 'none'
               }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Link to={page.url}>{page.name}</Link>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                href={page.url}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+              Q-PAL
+            </Typography>
+            <Stack direction='row' alignItems='center'>
+              <Box sx={{ flexGrow: 0 }}>
+                {
+                  hasUser ? (
+                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  ) : (
+                    <Button
+                      variant='outlined'
+                      size='small'
+                      href='/auth'
+                    >
+                      Login
+                    </Button>
+                  )
+                }
+              </Box>
+              <Box 
+                sx={{ 
+                  flexGrow: 1, 
+                  display: { 
+                    xs: 'flex', 
+                    md: 'none' 
+                    } 
+                }}
               >
-                {page.name}
-              </Button>
-            ))}
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography component={Link} to={setting.url}>
-                    {setting.name}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color='gray'
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{ display: { xs: 'block', md: 'none' } }}
+                >
+                  {hasUser ? (
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography component={Button} onClick={logout}>
+                        Logout
+                      </Typography>
+                    </MenuItem>
+                  ) : (
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography component={Link} to='/auth'>
+                        Login
+                      </Typography>
+                    </MenuItem>
+                  )}
+                </Menu>
+              </Box>
+            </Stack>
+          </Stack>
         </Toolbar>
       </Container>
     </AppBar>
