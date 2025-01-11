@@ -1,7 +1,10 @@
 import { Box, Button, Stack, Typography } from "@mui/material"
 import palette from "../../../../theme/palette"
 
-const MetricCard = () => {
+const MetricCard = ({
+  number,
+  label,
+}) => {
   return (
     <Stack 
       sx={{ 
@@ -9,21 +12,32 @@ const MetricCard = () => {
         padding: 2, 
         borderRadius: 2, 
         mt: 2,
-        }}
-        direction='row'
-        > 
+        width: '100%'
+      }}
+      direction='row'
+      justifyContent='space-between'
+      alignItems='start'
+    > 
       <Stack>
-        <Typography sx={{ fontSize: 32, fontWeight: 'semibold' }}>
-          29
+        <Typography 
+          variant="h5" 
+          color="primary" 
+          fontWeight={600}
+        >
+          {number}
         </Typography>
-        <Typography>
-          Open Jobs
+        <Typography 
+          variant="subtitle2" 
+          color="GrayText"
+        >
+          {label}
         </Typography>
       </Stack>
-      <Box sx={{ flexGrow: 1 }} />
-      <Button>
+      {/* <Button
+        size="small"
+      >
         View All
-      </Button>
+      </Button> */}
     </Stack>
   )
 }

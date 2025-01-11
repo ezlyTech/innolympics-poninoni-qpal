@@ -1,26 +1,35 @@
 import { Box, Button, Card, Stack, Typography } from "@mui/material"
 import palette from "../../../../theme/palette"
 
-const PostCard = () => {
+const PostCard = ({
+  jobTitle,
+  duration,
+  applicantName,
+}) => {
   return (
     <Card sx={{p: 2}}>
       <Stack>
         <Stack sx={{mb: 2}}>
-          <Stack direction='row' sx={{fontSize: 12, mb: 1}} >
-            <Typography>
-              Mechanic
+          <Stack direction='row' justifyContent="space-between">
+            <Typography variant="subtitle2" color="GrayText">
+              {jobTitle}
             </Typography>
-            <Box sx={{ flexGrow: 1 }} />
-            <Typography>
-              1 day ago
+            <Typography variant="subtitle2" color="GrayText">
+              {duration}
             </Typography>
           </Stack>
-          <Typography sx={{fontSize: 14}}>
-            Alan Smith applied to your post
+          <Typography variant="subtitle1" fontWeight={600}>
+            {applicantName} applied to your post
           </Typography>
         </Stack>
       </Stack>
-      <Button sx={{bgcolor: palette.primary.light, fontSize: 10 }}>
+      <Button 
+        sx={{
+          bgcolor: palette.primary.light, 
+          fontSize: 10 
+        }}
+        size="small"
+      >
         View Details
       </Button>
     </Card>
