@@ -1,14 +1,29 @@
-import { Stack, Typography } from "@mui/material"
+import { Box, Button, Stack, Typography } from "@mui/material"
+import palette from "../../../../theme/palette"
 
 const MetricCard = () => {
   return (
-    <Stack sx={{ bgcolor: 'lightblue', padding: 2, height: 100, width: 100, borderRadius: 4 }}>
-      <Typography sx={{ fontSize: 24 }}>
-        29
-      </Typography>
-      <Typography>
-        Open Jobs
-      </Typography>
+    <Stack 
+      sx={{ 
+        bgcolor: palette.primary.light, 
+        padding: 2, 
+        borderRadius: 2, 
+        mt: 2,
+        }}
+        direction='row'
+        > 
+      <Stack>
+        <Typography sx={{ fontSize: 32, fontWeight: 'semibold' }}>
+          29
+        </Typography>
+        <Typography>
+          Open Jobs
+        </Typography>
+      </Stack>
+      <Box sx={{ flexGrow: 1 }} />
+      <Button>
+        View All
+      </Button>
     </Stack>
   )
 }
