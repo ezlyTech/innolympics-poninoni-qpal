@@ -9,7 +9,6 @@ import {
   Container,
   Avatar,
   Button,
-  Tooltip,
   MenuItem,
   Stack,
 } from '@mui/material';
@@ -17,7 +16,6 @@ import {
   signOut, 
 } from 'firebase/auth'
 import {
-  Adb as AdbIcon,
   Menu as MenuIcon,
 } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
@@ -27,6 +25,7 @@ import logo from '../../assets/images/q-pal-logo.png';
 const Navigation = () => {
   const [hasUser, setHasUser] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -123,7 +122,7 @@ const Navigation = () => {
                 {
                   hasUser ? (
                     <Avatar
-                      {...stringAvatar(user.displayName)}  
+                      {...stringAvatar(user?.displayName)}  
                     />
                   ) : (
                     <Button
