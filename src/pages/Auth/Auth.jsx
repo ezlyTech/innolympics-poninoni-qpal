@@ -19,6 +19,7 @@ import {
   useState,
   useEffect,
 } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -39,9 +40,12 @@ const Auth = () => {
     return () => unsubscribe(); // Cleanup listener
   }, []);
 
+  const navigate = useNavigate();
+
   const signInWithGoogle = async () => {
     try {
-        await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(auth, googleProvider);
+      navigate('/dashboard')
     } catch (err) {
         console.error("Error signing in with Google:", err.message);
     }
