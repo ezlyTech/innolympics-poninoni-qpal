@@ -22,6 +22,7 @@ import {
 } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth } from "firebase/auth";
+import logo from '../../assets/images/q-pal-logo.png';
 
 const Navigation = () => {
   const [hasUser, setHasUser] = useState(null);
@@ -67,6 +68,38 @@ const Navigation = () => {
     }
   };
 
+  const stringToColor = (string) => {
+    let hash = 0;
+    let i;
+  
+    /* eslint-disable no-bitwise */
+    for (i = 0; i < string.length; i += 1) {
+      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+  
+    let color = '#';
+  
+    for (i = 0; i < 3; i += 1) {
+      const value = (hash >> (i * 8)) & 0xff;
+      color += `00${value.toString(16)}`.slice(-2);
+    }
+    /* eslint-enable no-bitwise */
+  
+    return color;
+  }
+  
+  const stringAvatar = (name) => {
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+        width: 24, 
+        height: 24,
+        fontSize: 10
+      },
+      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+    };
+  }
+
 
   return (
     <AppBar 
@@ -84,27 +117,14 @@ const Navigation = () => {
             alignItems='center'
             sx={{ width: '100%' }}
           >
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                flexGrow: 1,
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'primary',
-                textDecoration: 'none'
-              }}
-            >
-              Q-PAL
-            </Typography>
+            <img src={logo} alt='Q-PAL Logo' width={30}/>
             <Stack direction='row' alignItems='center'>
               <Box sx={{ flexGrow: 0 }}>
                 {
                   hasUser ? (
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                    <Avatar
+                      {...stringAvatar(user.displayName)}  
+                    />
                   ) : (
                     <Button
                       variant='outlined'
