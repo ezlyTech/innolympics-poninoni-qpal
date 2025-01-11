@@ -9,6 +9,7 @@ import {
   Dashboard, 
   Item1, 
   Item2,
+  Login,
   MyAccount,
   NotFound,
   Settings,
@@ -26,6 +27,7 @@ const App = () => {
         <Route index element={<Dashboard />}/>
         <Route path='item1' element={<Item1 />}/>
         <Route path='item2' element={<Item2 />}/>
+        <Route path='login' element={<Login />}/>
         <Route path='my-account' element={<MyAccount />}/>
         <Route path='settings' element={<Settings />}/>
         <Route path='*' element={<NotFound />}/>
