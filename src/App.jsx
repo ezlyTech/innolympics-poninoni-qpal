@@ -7,6 +7,7 @@ import {
 import { 
   Auth,
   Dashboard, 
+  JobDetails,
   Login,
   MyAccount,
   NotFound,
@@ -24,6 +25,7 @@ const App = () => {
       <Route path="/" element={<RootLayout />}>
         <Route path='auth' element={<Auth />}/>
         <Route path='dashboard' element={<Dashboard />}/>
+        <Route path='job-details' element={<JobDetails />}/>
         <Route path='post-a-job' element={<PostJobForm />}/>
         <Route index element={<Login />}/>
         <Route path='my-account' element={<MyAccount />}/>
