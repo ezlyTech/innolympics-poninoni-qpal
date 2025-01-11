@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { 
   AppBar,
   Box,
@@ -13,13 +13,14 @@ import {
   MenuItem,
 } from '@mui/material';
 import {
+  signOut, 
+} from 'firebase/auth'
+import {
   Adb as AdbIcon,
   Menu as MenuIcon,
 } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
-import {
-  auth,
-} from '../../config/firebase'
+import { Link, useNavigate } from 'react-router-dom';
+import { getAuth } from "firebase/auth";
 
 const pages = [
   {
@@ -49,6 +50,7 @@ const settings = [
 
 
 const Navigation = () => {
+  const [hasUser, setHasUser] = useState(null);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -66,6 +68,32 @@ const Navigation = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  useEffect(() => {
+    // Listen for changes to the current user
+    if (user) {
+        console.log('may user!')
+        console.log(user);
+        setHasUser(true);
+    } else {
+      // No user is signed in.
+        console.log('walang user!')
+        setHasUser(false);
+    } // Cleanup listener
+  }, [user]);
+
+  const logout = async () => {
+    try {
+        await signOut(auth);
+        useNavigate('/');
+    } catch (err) {
+        console.error("Error logging out:", err.message);
+    }
+  };
+
 
   return (
     <AppBar position="static">
@@ -176,13 +204,19 @@ const Navigation = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography component={Link} to={setting.url}>
-                    {setting.name}
+              {!hasUser ? (
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography component={Button} onClick={logout}>
+                    Logout
                   </Typography>
                 </MenuItem>
-              ))}
+              ) : (
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography component={Link} to='/auth'>
+                    Login
+                  </Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Toolbar>

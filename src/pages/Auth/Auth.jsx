@@ -53,11 +53,12 @@ const Auth = () => {
 
   return (
     <Stack alignItems='center'>
-            {/* Display Current User Info */}
-            <Typography variant="body1" gutterBottom>
-        {currentUser
-          ? `Logged in as: ${currentUser.email || "Anonymous"}`
-          : "No user is logged in"}
+      {/* Display Current User Info */}
+      <Typography variant="body1" gutterBottom>
+      {currentUser
+        ? `Logged in as: ${currentUser.email || "Anonymous"}`
+        : "No user is logged in"
+      }
       </Typography>
       <Box
         sx={{
