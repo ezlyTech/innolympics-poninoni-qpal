@@ -17,6 +17,9 @@ import {
   Menu as MenuIcon,
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import {
+  auth,
+} from '../../config/firebase'
 
 const pages = [
   {

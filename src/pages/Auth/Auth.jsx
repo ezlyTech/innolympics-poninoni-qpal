@@ -1,31 +1,74 @@
 import { 
   Box,
   Button,
-  Card, 
-  CardContent,
   Divider,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import {
+  auth,
+  googleProvider,
+} from '../../config/firebase'
+import { 
+    createUserWithEmailAndPassword, 
+    signInWithPopup, 
+} from "firebase/auth";
+import { 
+  useState,
+  useEffect,
+} from "react";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [currentUser, setCurrentUser] = useState(null); 
+
+  useEffect(() => {
+    // Listen for changes to the current user
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+    });
+
+    return () => unsubscribe(); // Cleanup listener
+  }, []);
+
+  const signInWithGoogle = async () => {
+    try {
+        await signInWithPopup(auth, googleProvider);
+    } catch (err) {
+        console.error("Error signing in with Google:", err.message);
+    }
+  };
+
+  // Function to create a new user
+  const createAccount = async () => {
+    try {
+        await createUserWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+        console.error("Error creating account:", err.message);
+    }
+  };
+
   return (
     <Stack alignItems='center'>
+            {/* Display Current User Info */}
+            <Typography variant="body1" gutterBottom>
+        {currentUser
+          ? `Logged in as: ${currentUser.email || "Anonymous"}`
+          : "No user is logged in"}
+      </Typography>
       <Box
         sx={{
           maxWidth:'750px'
         }}
       >
         <Typography>
-          Sign In
+          Create an Account
         </Typography>
         <Typography>
-          Please sign in to your registered account.
+          Please fill registration form below.
         </Typography>
         <Stack
           gap={1}
@@ -46,29 +89,20 @@ const Auth = () => {
           />
           <Button
             variant="contained"
+            onClick={createAccount}
           >
-            Login
+            Create Account
           </Button>
         </Stack>
         <Stack
           gap={1}
           mt={2}
         >
-          <Typography
-            textAlign='center'
-          >
-            Or sign in with
-          </Typography>
-          <Button
-            variant="contained"
-          >
-            Google
-          </Button>
-          <Divider />
           <Button
             variant="outlined"
+            onClick={signInWithGoogle}
           >
-            Create Account
+            Sign in with Google
           </Button>
         </Stack>
       </Box>
