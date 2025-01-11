@@ -13,7 +13,7 @@ const Login = () => {
       <Stack spacing={2}>
         <Stack>
           <Typography 
-            variant="body1" 
+            variant="h5" 
             fontWeight={600}
             sx={{
               color: '#4C484D'

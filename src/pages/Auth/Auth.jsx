@@ -84,7 +84,7 @@ const Auth = () => {
             sx={{mt: 2}}
           >
             <Stack mb={2}>
-              <Typography>
+              <Typography variant="h5" fontWeight={600}>
                 Sign In
               </Typography>
               <Typography color="GrayText">
@@ -97,6 +97,7 @@ const Auth = () => {
               variant="outlined"
               type="email"
               onChange={(e) => setSignInEmail(e.target.value)}
+              required
             />
             <TextField 
               id="signInPassword"
@@ -104,6 +105,7 @@ const Auth = () => {
               variant="outlined"
               type="password"
               onChange={(e) => setSignInPassword(e.target.value)}
+              required
             />
             <Button
               variant="contained"
@@ -118,7 +120,7 @@ const Auth = () => {
             sx={{mt: 2}}
           >
             <Stack mb={2}>
-              <Typography>
+              <Typography variant="h5" fontWeight={600}>
                 Create an Account
               </Typography>
               <Typography color="GrayText">
@@ -134,6 +136,7 @@ const Auth = () => {
                 variant="outlined"
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
               <TextField 
                 id="password"
@@ -141,6 +144,7 @@ const Auth = () => {
                 variant="outlined"
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
               <Button
                 variant="contained"

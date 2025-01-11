@@ -144,47 +144,60 @@ const Navigation = () => {
                     md: 'none' 
                     } 
                 }}
-              >
-                <IconButton
-                  size="large"
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleOpenNavMenu}
-                  color='gray'
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorElNav}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-                  open={Boolean(anchorElNav)}
-                  onClose={handleCloseNavMenu}
-                  sx={{ display: { xs: 'block', md: 'none' } }}
-                >
-                  {hasUser ? (
-                    <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography component={Button} onClick={logout}>
-                        Logout
-                      </Typography>
-                    </MenuItem>
-                  ) : (
-                    <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography component={Link} to='/auth'>
-                        Login
-                      </Typography>
-                    </MenuItem>
-                  )}
-                </Menu>
+              > 
+              
+              {
+                hasUser && (
+                  <>
+                  <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleOpenNavMenu}
+                    color='gray'
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorElNav}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}
+                    open={Boolean(anchorElNav)}
+                    onClose={handleCloseNavMenu}
+                    sx={{ display: { xs: 'block', md: 'none' } }}
+                  >
+                    {hasUser ? (
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <Typography component={Button} onClick={logout}>
+                          Logout
+                        </Typography>
+                      </MenuItem>
+                    ) : (
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <Typography 
+                          component={Link}
+                          to='/auth' 
+                          sx={{ 
+                            textDecoration: 'none'
+                          }}
+                        >
+                          Login
+                        </Typography>
+                      </MenuItem>
+                    )}
+                  </Menu>
+                  </>
+                )
+              }
               </Box>
             </Stack>
           </Stack>
