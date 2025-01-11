@@ -6,8 +6,10 @@ const RootLayout = () => {
   return (
     <div>
         <Navigation />
-        <Container>
-            <Outlet />
+        <Container 
+          sx={{ px: 2, py: 4 }}
+        >
+          <Outlet />
         </Container>
     </div>
   )

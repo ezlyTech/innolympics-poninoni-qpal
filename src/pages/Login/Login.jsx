@@ -1,40 +1,58 @@
-import { Avatar, Box, Card, Stack, Typography } from "@mui/material"
+import { 
+  Box,
+  Card, 
+  CardActionArea, 
+  Stack, 
+  Typography,
+} from "@mui/material"
+import loginImg from '../../assets/images/02-login-img.png'
 
 const Login = () => {
   return (
     <>
-      <Box sx={{}} >
-        <Typography sx={{ textAlign: 'center', paddingTop: 8}} >
-          Tagline here...Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum quidem doloribus quibusdam illo id ad eaque commodi, nihil eligendi.
-        </Typography>
-      </Box>
-      <Stack sx={{marginTop: 16}} spacing={2}>
+      <Stack spacing={2}>
         <Stack>
-          <Typography sx={{ fontWeight: 'bold' }}>
+          <Typography 
+            variant="body1" 
+            fontWeight={600}
+            sx={{
+              color: '#4C484D'
+            }}
+          >
             Continue as
           </Typography>
-          <Typography>
+          <Typography variant="body2" color="GrayText">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quas.
           </Typography>
         </Stack>
         <Stack spacing={2}>
-          <Card sx={{ padding: 2 }}>
-            <Stack direction={'row'} spacing={2}>
-              <Avatar alt="Bossing" src="src\assets\react.svg"/>
-              <Stack>
-              <Typography sx={{fontWeight: 'bold'}}>Bossing</Typography>
-              <Typography>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</Typography>
+          <Card variant="outlined">
+            <CardActionArea>
+              <Stack direction={'row'} spacing={2} p={2}>
+                <Stack>
+                  <Typography sx={{fontWeight: 'bold'}} color="primary">
+                    Bossing (Recruiter)
+                  </Typography>
+                  <Typography color="GrayText" variant="subtitle2">
+                    Continue as a recruiter. Find affordable talents within your area.
+                  </Typography>
+                </Stack>
               </Stack>
-            </Stack>
+            </CardActionArea>
           </Card>
-          <Card sx={{ padding: 2 }}>
-          <Stack direction={'row'} spacing={2}>
-              <Avatar alt="Pal" src="src\assets\react.svg"/>
-              <Stack>
-              <Typography sx={{fontWeight: 'bold'}}>Pal</Typography>
-              <Typography>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</Typography>
+          <Card variant="outlined">
+            <CardActionArea>
+              <Stack direction={'row'} spacing={2} p={2}>
+                <Stack>
+                  <Typography sx={{fontWeight: 'bold'}} color="primary">
+                    PAL (Job Seeker)
+                  </Typography>
+                  <Typography color="GrayText" variant="subtitle2">
+                    Continue as a job seeker. Browse available job openings and view your progress.
+                  </Typography>
+                </Stack>
               </Stack>
-            </Stack>
+            </CardActionArea>
           </Card>
         </Stack>
       </Stack>
