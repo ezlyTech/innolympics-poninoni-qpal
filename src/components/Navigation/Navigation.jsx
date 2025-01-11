@@ -33,21 +33,6 @@ const pages = [
   },
 ];
 
-const settings = [
-  {
-    name: 'Settings',
-    url: '/settings',
-  },
-  {
-    name: 'My Account',
-    url: '/my-account',
-  },
-  {
-    name: 'Logout',
-    url: '/auth',
-  },
-];
-
 
 const Navigation = () => {
   const [hasUser, setHasUser] = useState(null);
@@ -85,10 +70,12 @@ const Navigation = () => {
     } // Cleanup listener
   }, [user]);
 
+  const navigate = useNavigate();
+
   const logout = async () => {
     try {
         await signOut(auth);
-        useNavigate('/');
+        navigate('/');
     } catch (err) {
         console.error("Error logging out:", err.message);
     }
@@ -204,7 +191,7 @@ const Navigation = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {!hasUser ? (
+              {hasUser ? (
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography component={Button} onClick={logout}>
                     Logout

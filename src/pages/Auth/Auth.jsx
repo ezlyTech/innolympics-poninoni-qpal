@@ -1,7 +1,6 @@
 import { 
   Box,
   Button,
-  Divider,
   Stack,
   TextField,
   Typography,
@@ -13,6 +12,7 @@ import {
 import { 
     createUserWithEmailAndPassword, 
     signInWithPopup, 
+    signInWithEmailAndPassword
 } from "firebase/auth";
 import { 
   useState,
@@ -22,6 +22,8 @@ import {
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [signInEmail, setSignInEmail] = useState("");
+  const [signInPassword, setSignInPassword] = useState("");
 
   const [currentUser, setCurrentUser] = useState(null); 
 
@@ -39,6 +41,14 @@ const Auth = () => {
         await signInWithPopup(auth, googleProvider);
     } catch (err) {
         console.error("Error signing in with Google:", err.message);
+    }
+  };
+
+  const signInAccount = async () => {
+    try {
+        await signInWithEmailAndPassword(auth, signInEmail, signInPassword);
+    } catch (err) {
+        console.error("Error signing in:", err.message);
     }
   };
 
@@ -93,6 +103,29 @@ const Auth = () => {
             onClick={createAccount}
           >
             Create Account
+          </Button>
+        </Stack>
+        <Stack
+          gap={1}
+          sx={{mt: 2}}>
+        <TextField 
+            id="signInEmail"
+            label="Email"
+            variant="outlined"
+            type="email"
+            onChange={(e) => setSignInEmail(e.target.value)}
+          />
+          <TextField 
+            id="signInPassword"
+            label="Password"
+            variant="outlined"
+            type="password"
+            onChange={(e) => setSignInPassword(e.target.value)}
+          />
+          <Button
+            variant="outlined"
+            onClick={signInAccount}>
+            Sign in
           </Button>
         </Stack>
         <Stack
