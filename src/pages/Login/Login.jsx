@@ -19,10 +19,20 @@ const Login = () => {
               color: '#4C484D'
             }}
           >
-            Continue as
+            Make jobs more accessible for everyone
           </Typography>
-          <Typography variant="body2" color="GrayText">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quas.
+          <Typography variant="body2" color="GrayText" mt={1}>
+            Post a job and connect with job seekers instantly through SMS.
+          </Typography>
+        </Stack>
+        <Stack>
+          <Typography
+            variant="subtitle2"
+            sx={{
+              color: '#4C484D'
+            }}
+          >
+            Continue as...
           </Typography>
         </Stack>
         <Stack spacing={2}>
